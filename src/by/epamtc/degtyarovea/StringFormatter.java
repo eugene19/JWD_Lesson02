@@ -1,11 +1,13 @@
 package by.epamtc.degtyarovea;
 
+import java.math.BigInteger;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class StringFormatter {
 
     private final static String SPACE = " ";
+    private final static String EMPTY = "";
 
     public static String getEvenChars(String text) {
         StringBuilder even = new StringBuilder();
@@ -31,30 +33,11 @@ public class StringFormatter {
         return odd.toString();
     }
 
-//    public static String[] separateEvenAndOddChars(String text) {
-//        String[] evenAndOdd = new String[2];
-//        StringBuilder even = new StringBuilder();
-//        StringBuilder odd = new StringBuilder();
-//
-//        for (int i = 0; i < text.length(); i++) {
-//            if (i % 2 != 0) {
-//                even.append(text.charAt(i));
-//            } else {
-//                odd.append(text.charAt(i));
-//            }
-//        }
-//
-//        evenAndOdd[0] = even.toString();
-//        evenAndOdd[1] = odd.toString();
-//
-//        return evenAndOdd;
-//    }
-
     public static double getUppercaseRatio(String text) {
-        int countUpper;
-        countUpper = getCountUpper(text);
+        int countUpper = getCountUpper(text);
+        int countLower = text.length() - countUpper;
 
-        return (double) countUpper / text.length();
+        return (double) countUpper / countLower;
     }
 
     private static int getCountUpper(String text) {
@@ -111,7 +94,7 @@ public class StringFormatter {
     }
 
     public static String deleteSubstring(String origin, String sub) {
-        return origin.replace(sub, "");
+        return origin.replace(sub, EMPTY);
     }
 
     public static String copySubstring(String origin, int beginIndex, int endIndex) {
@@ -121,11 +104,9 @@ public class StringFormatter {
     public static int countSubstrings(String text, String sub) {
         int count = 0;
 
-        if (text.contains(sub)) {
+        while (text.contains(sub)) {
+            text = text.replaceFirst(sub, EMPTY);
             count++;
-            int indexForTextRest = text.indexOf(sub) + sub.length();
-            String textRest = text.substring(indexForTextRest);
-            count += countSubstrings(textRest, sub);
         }
 
         return count;
@@ -212,7 +193,7 @@ public class StringFormatter {
 
     public static String removeLastWord(String text) {
         StringBuilder stringBuilder = new StringBuilder();
-        String[] words = getWords(text);
+        String[] words = getWords(text.trim());
 
         for (int i = 0; i < words.length - 1; i++) {
             if (i != 0) {
@@ -248,8 +229,10 @@ public class StringFormatter {
     }
 
     public static String addBigInteger(String operand1, String operand2) {
+        BigInteger sum = new BigInteger(operand1);
+        sum = sum.add(new BigInteger(operand2));
 
-        return null;
+        return sum.toString();
     }
 
     public static String removeWordsByLength(String text, int wordLength) {

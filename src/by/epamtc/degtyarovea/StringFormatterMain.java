@@ -7,7 +7,7 @@ import static by.epamtc.degtyarovea.StringFormatter.*;
 public class StringFormatterMain {
 
     public static void main(String[] args) {
-        String originText = "hello world! hello world! hello world!";
+        String originText = "hhhHHH";
 
         // Task 1
         System.out.printf("1. Even: '%s', odd: '%s'.%n",
@@ -15,7 +15,7 @@ public class StringFormatterMain {
                 getOddChars(originText));
 
         // Task 2
-        System.out.printf("2. Ratio of uppercase is %.2f.%n",
+        System.out.printf("2. Ratio of uppercase to lowercase is %.2f.%n",
                 getUppercaseRatio(originText));
 
         // Task 3
