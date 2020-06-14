@@ -1,6 +1,5 @@
 package by.epamtc.degtyarovea;
 
-import java.math.BigInteger;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -35,9 +34,8 @@ public class StringFormatter {
 
     public static double getUppercaseRatio(String text) {
         int countUpper = getCountUpper(text);
-        int countLower = text.length() - countUpper;
 
-        return (double) countUpper / countLower;
+        return (double) countUpper / text.length();
     }
 
     private static int getCountUpper(String text) {
@@ -53,10 +51,10 @@ public class StringFormatter {
     }
 
     public static String deleteSameChars(String text) {
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
 
-        text.chars().distinct().forEach(c -> stringBuilder.append((char) c));
-        return stringBuilder.toString();
+        text.chars().distinct().forEach(c -> builder.append((char) c));
+        return builder.toString();
     }
 
     public static Map<Character, Integer> getCharsFrequency(String text) {
@@ -77,20 +75,20 @@ public class StringFormatter {
     }
 
     public static String revert(String text) {
-        StringBuilder stringBuilder = new StringBuilder(text);
-        stringBuilder.reverse();
+        StringBuilder builder = new StringBuilder(text);
+        builder.reverse();
 
-        return stringBuilder.toString();
+        return builder.toString();
     }
 
     public static String insertSubstring(String origin, String sub, int offset) {
         if (offset < 0 || offset > origin.length()) {
             return origin;
         }
-        StringBuilder stringBuilder = new StringBuilder(origin);
-        stringBuilder.insert(offset, sub);
+        StringBuilder builder = new StringBuilder(origin);
+        builder.insert(offset, sub);
 
-        return stringBuilder.toString();
+        return builder.toString();
     }
 
     public static String deleteSubstring(String origin, String sub) {
@@ -113,17 +111,17 @@ public class StringFormatter {
     }
 
     public static String revertWords(String text) {
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         String[] words = getWords(text);
 
         for (int i = words.length - 1; i >= 0; i--) {
-            stringBuilder.append(words[i]);
+            builder.append(words[i]);
             if (i != 0) {
-                stringBuilder.append(SPACE);
+                builder.append(SPACE);
             }
         }
 
-        return stringBuilder.toString();
+        return builder.toString();
     }
 
     public static String replaceSpacesWithAsterisk(String text) {
@@ -132,23 +130,29 @@ public class StringFormatter {
 
     public static String replaceCharAtLongestWord(String text) {
         String[] words = getWords(text);
-        int longestWord = getIndexOfLongestWord(words);
+        int maxLength = lengthOfLongestWord(words);
 
-        words[longestWord] = words[longestWord].replaceAll("a", "b");
+        for (int i = 0; i < words.length; i++) {
+            if (words[i].length() == maxLength) {
+                words[i] = words[i].replaceAll("a", "b");
+            }
+        }
 
         return String.join(SPACE, words);
     }
 
-    private static int getIndexOfLongestWord(String[] words) {
-        int index = 0;
+    private static int lengthOfLongestWord(String[] words) {
+        int maxLength = words[0].length();
+        int wordLength;
 
-        for (int i = 0; i < words.length; i++) {
-            if (words[index].length() < words[i].length()) {
-                index = i;
+        for (String word : words) {
+            wordLength = word.length();
+            if (wordLength > maxLength) {
+                maxLength = wordLength;
             }
         }
 
-        return index;
+        return maxLength;
     }
 
     public static int lengthOfShortestWord(String text) {
@@ -172,7 +176,7 @@ public class StringFormatter {
     }
 
     public static String swapWords(String text) {
-        StringBuilder stringBuilder = new StringBuilder(text.length());
+        StringBuilder builder = new StringBuilder(text.length());
         String[] words = getWords(text);
 
         if (words.length < 2) {
@@ -180,47 +184,39 @@ public class StringFormatter {
         }
 
         for (int i = 1; i < words.length; i += 2) {
-            stringBuilder.append(words[i])
+            if (i != 1) {
+                builder.append(SPACE);
+            }
+            builder.append(words[i])
                     .append(SPACE)
                     .append(words[i - 1]);
-            if (i != words.length - 1) {
-                stringBuilder.append(SPACE);
-            }
         }
 
-        return stringBuilder.toString();
+        return builder.toString();
     }
 
     public static String removeLastWord(String text) {
-        StringBuilder stringBuilder = new StringBuilder();
         String[] words = getWords(text.trim());
+        words[words.length - 1] = EMPTY;
 
-        for (int i = 0; i < words.length - 1; i++) {
-            if (i != 0) {
-                stringBuilder.append(SPACE);
-            }
-            stringBuilder.append(words[i]);
-        }
-
-        return stringBuilder.toString();
+        return String.join(SPACE, words);
     }
 
     public static String addSpaces(String text) {
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
 
         for (int i = 0; i < text.length(); i++) {
-            stringBuilder.append(text.charAt(i))
+            builder.append(text.charAt(i))
                     .append(SPACE);
         }
 
-        return stringBuilder.toString();
+        return builder.toString();
     }
 
     public static boolean isPalindrome(String text) {
-        StringBuilder stringBuilder = new StringBuilder(text);
-        String reversedText;
+        StringBuilder builder = new StringBuilder(text);
+        String reversedText = builder.reverse().toString();
 
-        reversedText = stringBuilder.reverse().toString();
         return text.equals(reversedText);
     }
 
@@ -229,26 +225,56 @@ public class StringFormatter {
     }
 
     public static String addBigInteger(String operand1, String operand2) {
-        BigInteger sum = new BigInteger(operand1);
-        sum = sum.add(new BigInteger(operand2));
+        StringBuilder builder = new StringBuilder();
+        int inMemory = 0;
+        int currentSum;
+        int currentDigit1;
+        int currentDigit2;
 
-        return sum.toString();
+        for (int i = operand1.length() - 1, j = operand2.length() - 1; i >= 0 || j >= 0; i--, j--) {
+            if (i < 0) {
+                currentDigit2 = Character.digit(operand2.charAt(j), 10);
+                currentSum = currentDigit2 + inMemory;
+            } else if (j < 0) {
+                currentDigit1 = Character.digit(operand1.charAt(i), 10);
+                currentSum = currentDigit1 + inMemory;
+            } else {
+                currentDigit1 = Character.digit(operand1.charAt(i), 10);
+                currentDigit2 = Character.digit(operand2.charAt(j), 10);
+                currentSum = currentDigit1 + currentDigit2 + inMemory;
+            }
+
+            if (currentSum >= 10) {
+                inMemory = currentSum / 10;
+                currentSum %= 10;
+            } else {
+                inMemory = 0;
+            }
+
+            builder.append(currentSum);
+        }
+
+        if (inMemory > 0) {
+            builder.append(inMemory);
+        }
+
+        return builder.reverse().toString();
     }
 
     public static String removeWordsByLength(String text, int wordLength) {
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         String[] words = getWords(text);
 
         for (int i = 0; i < words.length; i++) {
             if (i != 0) {
-                stringBuilder.append(SPACE);
+                builder.append(SPACE);
             }
             if (words[i].length() != wordLength) {
-                stringBuilder.append(words[i]);
+                builder.append(words[i]);
             }
         }
 
-        return stringBuilder.toString();
+        return builder.toString();
     }
 
     public static String removeExactSpaces(String text) {

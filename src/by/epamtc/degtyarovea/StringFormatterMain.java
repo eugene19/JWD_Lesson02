@@ -7,7 +7,7 @@ import static by.epamtc.degtyarovea.StringFormatter.*;
 public class StringFormatterMain {
 
     public static void main(String[] args) {
-        String originText = "hhhHHH";
+        String originText = "hahh HHaH aaaa aaa qwe";
 
         // Task 1
         System.out.printf("1. Even: '%s', odd: '%s'.%n",
@@ -15,8 +15,10 @@ public class StringFormatterMain {
                 getOddChars(originText));
 
         // Task 2
-        System.out.printf("2. Ratio of uppercase to lowercase is %.2f.%n",
-                getUppercaseRatio(originText));
+        double uppercaseRatio = getUppercaseRatio(originText);
+        double lowercaseRatio = 1 - uppercaseRatio;
+        System.out.printf("2. Ratio of uppercase is %.2f, lower is %.2f.%n",
+                uppercaseRatio, lowercaseRatio);
 
         // Task 3
         System.out.printf("3. Text without the same chars: %s.%n",
@@ -83,8 +85,8 @@ public class StringFormatterMain {
                 replaceSubstring(originText, "AA", "BB"));
 
         // Task 21
-        String operand1 = "12345678";
-        String operand2 = "87654321";
+        String operand1 = "12345";
+        String operand2 = "12345678123456781234567812345678";
         System.out.printf("21. Add two numbers: %s + %s = %s.%n",
                 operand1,
                 operand2,
