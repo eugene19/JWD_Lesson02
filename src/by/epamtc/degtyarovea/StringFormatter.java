@@ -8,7 +8,7 @@ public class StringFormatter {
     private final static String SPACE = " ";
     private final static String EMPTY = "";
 
-    public static String getEvenChars(String text) {
+    public static String evenChars(String text) {
         StringBuilder even = new StringBuilder();
 
         for (int i = 0; i < text.length(); i++) {
@@ -20,7 +20,7 @@ public class StringFormatter {
         return even.toString();
     }
 
-    public static String getOddChars(String text) {
+    public static String oddChars(String text) {
         StringBuilder odd = new StringBuilder();
 
         for (int i = 0; i < text.length(); i++) {
@@ -32,13 +32,13 @@ public class StringFormatter {
         return odd.toString();
     }
 
-    public static double getUppercaseRatio(String text) {
-        int countUpper = getCountUpper(text);
+    public static double uppercaseRatio(String text) {
+        int countUpper = countUpper(text);
 
         return (double) countUpper / text.length();
     }
 
-    private static int getCountUpper(String text) {
+    private static int countUpper(String text) {
         int countUpper = 0;
 
         for (int i = 0; i < text.length(); i++) {
@@ -57,7 +57,7 @@ public class StringFormatter {
         return builder.toString();
     }
 
-    public static Map<Character, Integer> getCharsFrequency(String text) {
+    public static Map<Character, Integer> charsFrequency(String text) {
         Map<Character, Integer> charFrequency = new TreeMap<>();
 
         for (int i = 0; i < text.length(); i++) {
@@ -112,7 +112,7 @@ public class StringFormatter {
 
     public static String revertWords(String text) {
         StringBuilder builder = new StringBuilder();
-        String[] words = getWords(text);
+        String[] words = words(text);
 
         for (int i = words.length - 1; i >= 0; i--) {
             builder.append(words[i]);
@@ -129,7 +129,7 @@ public class StringFormatter {
     }
 
     public static String replaceCharAtLongestWord(String text) {
-        String[] words = getWords(text);
+        String[] words = words(text);
         int maxLength = lengthOfLongestWord(words);
 
         for (int i = 0; i < words.length; i++) {
@@ -156,7 +156,7 @@ public class StringFormatter {
     }
 
     public static int lengthOfShortestWord(String text) {
-        String[] words = getWords(text);
+        String[] words = words(text);
         int minLength = words[0].length();
         int wordLength;
 
@@ -170,14 +170,14 @@ public class StringFormatter {
         return minLength;
     }
 
-    public static int getWordsCount(String text) {
-        String[] words = getWords(text);
+    public static int wordsCount(String text) {
+        String[] words = words(text);
         return words.length;
     }
 
     public static String swapWords(String text) {
         StringBuilder builder = new StringBuilder(text.length());
-        String[] words = getWords(text);
+        String[] words = words(text);
 
         if (words.length < 2) {
             return words[0];
@@ -196,7 +196,7 @@ public class StringFormatter {
     }
 
     public static String removeLastWord(String text) {
-        String[] words = getWords(text.trim());
+        String[] words = words(text.trim());
         words[words.length - 1] = EMPTY;
 
         return String.join(SPACE, words);
@@ -263,7 +263,7 @@ public class StringFormatter {
 
     public static String removeWordsByLength(String text, int wordLength) {
         StringBuilder builder = new StringBuilder();
-        String[] words = getWords(text);
+        String[] words = words(text);
 
         for (int i = 0; i < words.length; i++) {
             if (i != 0) {
@@ -281,7 +281,7 @@ public class StringFormatter {
         return text.trim().replaceAll("\\s{2,}", SPACE);
     }
 
-    public static String[] getWords(String text) {
+    public static String[] words(String text) {
         return text.split("[\\s]+");
     }
 }

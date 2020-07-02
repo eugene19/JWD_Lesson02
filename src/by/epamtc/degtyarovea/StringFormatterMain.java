@@ -11,11 +11,11 @@ public class StringFormatterMain {
 
         // Task 1
         System.out.printf("1. Even: '%s', odd: '%s'.%n",
-                getEvenChars(originText),
-                getOddChars(originText));
+                evenChars(originText),
+                oddChars(originText));
 
         // Task 2
-        double uppercaseRatio = getUppercaseRatio(originText);
+        double uppercaseRatio = uppercaseRatio(originText);
         double lowercaseRatio = 1 - uppercaseRatio;
         System.out.printf("2. Ratio of uppercase is %.2f, lower is %.2f.%n",
                 uppercaseRatio, lowercaseRatio);
@@ -26,7 +26,7 @@ public class StringFormatterMain {
 
         // Task 4
         System.out.printf("4. Chars frequency: %s.%n",
-                getCharsFrequency(originText));
+                charsFrequency(originText));
 
         // Task 5
         System.out.printf("5. Reversion: %s.%n", revert(originText));
@@ -66,7 +66,7 @@ public class StringFormatterMain {
                 lengthOfShortestWord(originText));
 
         // Task 15
-        System.out.printf("15. Count of word: %d.%n", getWordsCount(originText));
+        System.out.printf("15. Count of word: %d.%n", wordsCount(originText));
 
         // Task 16
         System.out.printf("16. Swap words: %s.%n", swapWords(originText));
@@ -103,7 +103,7 @@ public class StringFormatterMain {
                 removeExactSpaces(originText));
 
         // Task 24
-        String[] words = getWords(originText);
+        String[] words = words(originText);
         System.out.printf("24. Words: %s.%n", Arrays.toString(words));
     }
 }
