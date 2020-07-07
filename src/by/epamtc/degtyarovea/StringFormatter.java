@@ -125,7 +125,8 @@ public class StringFormatter {
     }
 
     public static String replaceSpacesWithAsterisk(String text) {
-        return text.replaceAll("\\s+", "*");
+        String spaceSequenceRegex = "\\s+";
+        return text.replaceAll(spaceSequenceRegex, "*");
     }
 
     public static String replaceCharAtLongestWord(String text) {
