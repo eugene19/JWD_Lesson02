@@ -7,6 +7,7 @@ public class StringFormatter {
 
     private final static String SPACE = " ";
     private final static String EMPTY = "";
+    private final static String SPACE_SEQUENCE_REGEX = "\\s+";
 
     public static String evenChars(String text) {
         StringBuilder even = new StringBuilder();
@@ -125,8 +126,7 @@ public class StringFormatter {
     }
 
     public static String replaceSpacesWithAsterisk(String text) {
-        String spaceSequenceRegex = "\\s+";
-        return text.replaceAll(spaceSequenceRegex, "*");
+        return text.replaceAll(SPACE_SEQUENCE_REGEX, "*");
     }
 
     public static String replaceCharAtLongestWord(String text) {
@@ -279,10 +279,11 @@ public class StringFormatter {
     }
 
     public static String removeExactSpaces(String text) {
-        return text.trim().replaceAll("\\s{2,}", SPACE);
+        String twoAndMoreSpacesRegex = "\\s{2,}";
+        return text.trim().replaceAll(twoAndMoreSpacesRegex, SPACE);
     }
 
     public static String[] words(String text) {
-        return text.split("[\\s]+");
+        return text.split(SPACE_SEQUENCE_REGEX);
     }
 }
